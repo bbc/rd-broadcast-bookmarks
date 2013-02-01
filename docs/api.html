@@ -282,7 +282,7 @@ your <code>user_id</code> would be <code>jsmith</code>.
 <h4 id="sec-2-3-1">Bookmark a broadcast</h4>
 <div class="outline-text-4" id="text-2-3-1">
 <pre class="example">
-POST /bookmarks/:user/:pid
+POST /bookmarks/:user_id/:pid
 </pre>
 
 <p>
@@ -303,7 +303,7 @@ $ curl -i -X POST <a href="http://rd-broadcast-bookmarks.herokuapp.com/bookmarks
 <h4 id="sec-2-3-2">Get a specific bookmark for user and broadcast</h4>
 <div class="outline-text-4" id="text-2-3-2">
 <pre class="example">
-GET /bookmarks/:user/:pid
+GET /bookmarks/:user_id/:pid
 </pre>
 </div>
 
@@ -320,7 +320,7 @@ $ curl -i -X GET <a href="http://rd-broadcast-bookmarks.herokuapp.com/bookmarks/
 <h4 id="sec-2-3-3">Get all bookmarks for user</h4>
 <div class="outline-text-4" id="text-2-3-3">
 <pre class="example">
-GET /bookmarks/:user
+GET /bookmarks/:user_id
 </pre>
 
 <p>

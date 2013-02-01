@@ -78,7 +78,7 @@ your =user_id= would be =jsmith=.
 
 *** Bookmark a broadcast
 
-: POST /bookmarks/:user/:pid
+: POST /bookmarks/:user_id/:pid
 
 Returns =201 Created= on success, =400 Bad request= on error.
 
@@ -88,7 +88,7 @@ $ curl -i -X POST http://rd-broadcast-bookmarks.herokuapp.com/bookmarks/jsmith/p
 
 *** Get a specific bookmark for user and broadcast
 
-: GET /bookmarks/:user/:pid
+: GET /bookmarks/:user_id/:pid
 
 **** Example
 
@@ -96,7 +96,7 @@ $ curl -i -X GET http://rd-broadcast-bookmarks.herokuapp.com/bookmarks/jsmith/p0
 
 *** Get all bookmarks for user
 
-: GET /bookmarks/:user
+: GET /bookmarks/:user_id
 
 Returns a JSON array of [[Bookmark][Bookmarks]].
 
