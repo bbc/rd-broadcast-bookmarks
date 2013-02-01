@@ -26,4 +26,4 @@ Run the server:
 
 ## API
 
-The API is documented in [docs/api.html](docs/api.html).
+The API is documented in [docs/api.org](docs/api.org).
