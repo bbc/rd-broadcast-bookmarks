@@ -1,0 +1,184 @@
+#+SETUP_FILE: ~/org/setup2.org
+#+TITLE: TV schedule test API
+#+AUTHOR: Sean O'Halpin, BBC R&D
+
+* Introduction
+
+This document covers the API for a simplified RESTful TV schedule
+service. The API provides endpoints to retrieve a list of TV
+channels, a schedule of broadcasts (for a sample week) and the means
+to set and delete bookmarks against broadcasts.
+
+** General points about the API
+
+All =GET= APIs return either =200 Success= or =404 Not found=.
+
+The =POST /bookmarks/:user_id/:pid= API returns either =201 Created=
+or =400 Bad request=.
+
+All APIs return a JSON format string on success or an error message on
+error.
+
+All dates are UTC datetimes in ISO format. For example:
+
+: 2013-01-28T11:00:00Z
+
+* API
+
+** Channels
+
+*** All channels
+
+: GET /channels
+
+Returns a JSON array of [[Channel][Channels]] in sort order.
+
+**** Example
+
+: curl -i -X GET http://rd-broadcast-bookmarks.herokuapp.com/channels
+
+*** Individual channel
+
+: GET /channels/:channel_id
+
+Returns a JSON object for the [[Channel]].
+
+**** Example
+
+: curl -i -X GET http://rd-broadcast-bookmarks.herokuapp.com/channels/bbc_one
+
+** Schedule
+
+*** Schedule of broadcasts for date
+
+: GET /schedule/:channel_id/:date
+
+Returns a JSON array of [[Broadcast][Broadcasts]] for [[Channel]] for =:date=.
+
+**** Example
+
+: curl -i -X GET http://rd-broadcast-bookmarks.herokuapp.com/schedule/bbc_one/2013-01-28
+
+*** Schedule of broadcasts for date range
+
+: GET /schedule/:channel_id/:start_date/:end_date
+
+Returns a JSON array of [[Broadcast][Broadcasts]] for [[Channel]] from =:start_date= to =:end_date=.
+
+**** Example
+
+: curl -i -X GET http://rd-broadcast-bookmarks.herokuapp.com/schedule/bbc_one/2013-01-28/2013-01-31
+
+** Bookmarks
+
+Where you see =user_id= in the following API descriptions, use the
+initial of your first name concatenated with your last name in
+lowercase. For example, if your name were 'John E. Smith',
+your =user_id= would be =jsmith=.
+
+*** Bookmark a broadcast
+
+: POST /bookmarks/:user/:pid
+
+Returns =201 Created= on success, =400 Bad request= on error.
+
+**** Example
+
+$ curl -i -X POST http://rd-broadcast-bookmarks.herokuapp.com/bookmarks/jsmith/p013wn96 -H 'Content-Length: 0'
+
+*** Get a specific bookmark for user and broadcast
+
+: GET /bookmarks/:user/:pid
+
+**** Example
+
+$ curl -i -X GET http://rd-broadcast-bookmarks.herokuapp.com/bookmarks/jsmith/p013wn96
+
+*** Get all bookmarks for user
+
+: GET /bookmarks/:user
+
+Returns a JSON array of [[Bookmark][Bookmarks]].
+
+**** Example
+
+$ curl -i -X GET http://rd-broadcast-bookmarks.herokuapp.com/bookmarks/jsmith
+
+** Broadcasts
+
+*** Get a specific broadcast
+
+: GET /broadcasts/:pid
+
+**** Example
+
+: curl -i -X GET http://rd-broadcast-bookmarks.herokuapp.com/broadcasts/p013wn96
+
+* Data
+
+** Channel
+
+| Field      | Type    | Description                  |
+|------------+---------+------------------------------|
+| id         | string  | unique identifier            |
+| name       | string  | name of channel              |
+| sort_order | integer | sort order                   |
+| image      | string  | url of channel logo (132x99) |
+
+*** Example
+
+#+begin_src js
+  "bbc_one" :
+  {
+    "id" : "bbc_one",
+    "name" : "BBC One",
+    "sort_order": 1,
+    "image" : "/img/channels/bbc_one.jpg"
+  },
+#+end_src
+
+** Broadcast
+
+| Field       | Type    | Description                   |
+|-------------+---------+-------------------------------|
+| pid         | string  | unique identifier (broadcast) |
+| start_date  | string  | ISO date UTC                  |
+| end_date    | string  | ISO date UTC                  |
+| duration    | integer | duration in seconds           |
+| title       | string  | programme title               |
+| episode_pid | string  | identifier (episode)          |
+| image       | string  | URL of jpeg image (640x360)   |
+
+*** Example
+
+#+begin_src js
+  {
+      "pid": "p013wn96",
+      "start_date": "2013-01-26T01:00:00Z",
+      "end_date": "2013-01-26T01:05:00Z",
+      "duration": 300,
+      "title": "Weatherview",
+      "episode_pid": "b01q3ry3",
+      "image": "http://node1.bbcimg.co.uk/iplayer/images/episode/b01q3ry3_640_360.jpg"
+  },
+#+end_src
+
+** Bookmark
+
+| Field       | Type   | Description                           |
+|-------------+--------+---------------------------------------|
+| user_id     | string | unique identifier for user            |
+| pid         | string | broadcast identifier                  |
+| create_date | string | ISO datetime UTC of bookmark creation |
+
+*** Example
+
+#+begin_src js
+{
+  "p013wn96": {
+    "user_id": "jsmith",
+    "pid": "p013wn96",
+    "create_date": "2013-01-31T12:31:11Z"
+  }
+}
+#+end_src

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>TV schedule API coding test</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/><meta name="title" content="TV schedule API coding test"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content=""/>
+<meta name="author" content="Sean O'Halpin, BBC R&amp;D"/>
+<meta name="description" content="nil"/>
+<meta name="keywords" content="nil"/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style><link rel="stylesheet" type="text/css" href="https://dl.dropbox.com/u/909897/css/soh-org-min.css">
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012  Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">TV schedule API coding test</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">Coding task description</a>
+<ul>
+<li><a href="#sec-1-1">The task</a></li>
+<li><a href="#sec-1-2">The TV schedule server</a></li>
+<li><a href="#sec-1-3">Bookmarks</a></li>
+<li><a href="#sec-1-4">Questions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">Coding task description</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+As part of your job application, we want you to complete a coding task
+to test your Javascript, CSS and HTML skills.
+</p>
+
+<p>
+Your performance on this assignment will make a significant
+contribution to your job application. Please use this opportunity to
+show us what you can do.
+</p>
+
+<p>
+Create a repository on github for your code. You must send us the
+address of your github repo by 10am Friday 8 Feb 2013 and must
+complete the task by 10am Monday 11 Feb 2013 at which time we will
+make a copy of the repo. We will ignore any changes made to the repo
+after that time.
+</p>
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1">The task</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+We want you to write a single page browser application to view and
+interact with a TV schedule API in JSON format provided by a node.js
+server we are hosting on the internet. The application should enable a
+user to view and navigate through a TV schedule and to bookmark
+individual broadcasts using the REST API provided. We expect the
+application to work well in modern browsers.
+</p>
+
+<p>
+So, you will write a client-side application which will interact with
+our REST API. We have set up our server to return the CORS headers to
+allow this (so there's no need for a server at your end - you can just
+provide a static HTML file and assets).
+</p>
+
+<p>
+We are leaving the problem of how best to present this information up
+to you. You could use a standard TV programme guide grid, for example,
+or present a day at a time or enable a selection of views. The design
+goal is to produce a fluid user interface that is pleasant to use that
+presents the schedule information clearly. Ideally, it should work
+well on desktop, tablet and mobile browsers.
+</p>
+
+<p>
+Feel free to use any framework(s) you like.
+</p>
+</div>
+</div>
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2">The TV schedule server</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+The server's address is: <a href="http://rd-broadcast-bookmarks.herokuapp.com/" >http://rd-broadcast-bookmarks.herokuapp.com/</a>.
+</p>
+
+<p>
+You can find the server code and documentation for the API for the
+server at <a href="http://github/bbcrd/rd-broadcast-bookmarks" >http://github/bbcrd/rd-broadcast-bookmarks</a>. You can clone
+this repo and run it locally to test your applications. Do not fork
+this repo on github as that will reveal who you are to other
+candidates.
+</p>
+
+<p>
+The REST API the server provides is documented at
+<a href="http://rd-broadcast-bookmarks.herokuapp.com/api" >http://rd-broadcast-bookmarks.herokuapp.com/api</a> (and in
+docs/api.org). How to set up the server is documented in
+docs/INSTALL. Note that we expect your final submitted application to
+interact with our server at the url we provided above.
+</p>
+
+<p>
+The schedule covers the four BBC channels and seven days worth of
+data. The period covered is Saturday 26 Jan 2013 to Friday 1 Feb 2013
+inclusive. The source JSON for this schedule can be found in the data
+directory.
+</p>
+</div>
+</div>
+<div id="outline-container-1-3" class="outline-3">
+<h3 id="sec-1-3">Bookmarks</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+The API enables you to &lsquo;bookmark' a broadcast. We expect you to use
+this interface and to represent bookmarked broadcasts in the user
+interface. Note that the server we've set up does not persist these
+bookmarks across reboots so you may find that previously stored
+bookmarks have been cleared.
+</p>
+
+<p>
+To use the bookmark API, you'll need to use a <code>user_id</code> in the API
+calls. Your <code>user_id</code> should be your first initial joined to your last
+name in lowercase. For example, if your name were &lsquo;John E. Smith',
+your user id would be <code>jsmith</code>.
+</p>
+
+<p>
+The API call to set a bookmark should look something like this:
+</p>
+
+<pre class="example">
+POST http://rd-broadcast-bookmarks.herokuapp.com/bookmarks/jsmith/p013wn96
+</pre>
+</div>
+</div>
+<div id="outline-container-1-4" class="outline-3">
+<h3 id="sec-1-4">Questions</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+If you have any questions regarding the test or problems with the
+server API, please contact: <a href="mailto:sean.ohalpin@bbc.co.uk" >mailto:sean.ohalpin@bbc.co.uk</a>
+</p>
+</div>
+</div>
+</div>
+
+</div></body>
+</html>

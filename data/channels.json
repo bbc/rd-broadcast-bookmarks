@@ -1,0 +1,30 @@
+{
+  "bbc_one" :
+  {
+    "id" : "bbc_one",
+    "name" : "BBC One",
+    "sort_order": 1,
+    "image" : "/img/channels/bbc_one.jpg"
+  },
+  "bbc_two" :
+  {
+    "id" : "bbc_two",
+    "name" : "BBC Two",
+    "sort_order": 2,
+    "image" : "/img/channels/bbc_two.jpg"
+  },
+  "bbc_three" :
+  {
+    "id" : "bbc_three",
+    "name" : "BBC Three",
+    "sort_order": 3,
+    "image" : "/img/channels/bbc_three.jpg"
+  },
+  "bbc_four" :
+  {
+    "id" : "bbc_four",
+    "name" : "BBC Four",
+    "sort_order": 4,
+    "image" : "/img/channels/bbc_four.jpg"
+  }
+}

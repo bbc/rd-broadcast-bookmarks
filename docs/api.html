@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>TV schedule test API</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/><meta name="title" content="TV schedule test API"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content=""/>
+<meta name="author" content="Sean O'Halpin, BBC R&amp;D"/>
+<meta name="description" content="nil"/>
+<meta name="keywords" content="nil"/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style><link rel="stylesheet" type="text/css" href="https://dl.dropbox.com/u/909897/css/soh-org-min.css">
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012  Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">TV schedule test API</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">Introduction</a>
+<ul>
+<li><a href="#sec-1-1">General points about the API</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">API</a>
+<ul>
+<li><a href="#sec-2-1">Channels</a></li>
+<li><a href="#sec-2-2">Schedule</a></li>
+<li><a href="#sec-2-3">Bookmarks</a></li>
+<li><a href="#sec-2-4">Broadcasts</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">Data</a>
+<ul>
+<li><a href="#sec-3-1">Channel</a></li>
+<li><a href="#sec-3-2">Broadcast</a></li>
+<li><a href="#sec-3-3">Bookmark</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This document covers the API for a simplified RESTful TV schedule
+service. The API provides endpoints to retrieve a list of TV
+channels, a schedule of broadcasts (for a sample week) and the means
+to set and delete bookmarks against broadcasts.
+</p>
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1">General points about the API</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+All <code>GET</code> APIs return either <code>200 Success</code> or <code>404 Not found</code>.
+</p>
+
+<p>
+The <code>POST /bookmarks/:user_id/:pid</code> API returns either <code>201 Created</code>
+or <code>400 Bad request</code>.
+</p>
+
+<p>
+All APIs return a JSON format string on success or an error message on
+error.
+</p>
+
+<p>
+All dates are UTC datetimes in ISO format. For example:
+</p>
+
+<pre class="example">
+2013-01-28T11:00:00Z
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">API</h2>
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1">Channels</h3>
+<div id="outline-container-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1">All channels</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<pre class="example">
+GET /channels
+</pre>
+
+<p>
+Returns a JSON array of <a href="#sec-3-1" >Channels</a> in sort order.
+</p>
+</div>
+</div>
+<div id="outline-container-2-1-2" class="outline-4">
+<h4 id="sec-2-1-2">Individual channel</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<pre class="example">
+GET /channels/:channel_id
+</pre>
+
+<p>
+Returns a JSON object for the <a href="#sec-3-1" >Channel</a>.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2">Schedule</h3>
+<div id="outline-container-2-2-1" class="outline-4">
+<h4 id="sec-2-2-1">Schedule of broadcasts for date</h4>
+<div class="outline-text-4" id="text-2-2-1">
+<pre class="example">
+GET /schedule/:channel_id/:date
+</pre>
+
+<p>
+Returns a JSON array of <a href="#sec-3-2" >Broadcasts</a> for <a href="#sec-3-1" >Channel</a> for <code>:date</code>.
+</p>
+</div>
+
+<div id="outline-container-2-2-1-1" class="outline-5">
+<h5 id="sec-2-2-1-1">Example</h5>
+<div class="outline-text-5" id="text-2-2-1-1">
+<pre class="example">
+curl -i -X GET http://$HOST/schedule/bbc_one/2013-01-28
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-2-2-2" class="outline-4">
+<h4 id="sec-2-2-2">Schedule of broadcasts for date range</h4>
+<div class="outline-text-4" id="text-2-2-2">
+<pre class="example">
+GET /schedule/:channel_id/:start_date/:end_date
+</pre>
+
+<p>
+Returns a JSON array of <a href="#sec-3-2" >Broadcasts</a> for <a href="#sec-3-1" >Channel</a> from <code>:start_date</code> to <code>:end_date</code>.
+</p>
+</div>
+
+<div id="outline-container-2-2-2-1" class="outline-5">
+<h5 id="sec-2-2-2-1">Example</h5>
+<div class="outline-text-5" id="text-2-2-2-1">
+<pre class="example">
+curl -i -X GET http://$HOST/schedule/bbc_one/2013-01-28/2013-01-31
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-2-3" class="outline-3">
+<h3 id="sec-2-3">Bookmarks</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Where you see <code>user_id</code> in the following API descriptions, use the
+initial of your first name concatenated with your last name in
+lowercase. For example, if your name were &lsquo;John E. Smith',
+your <code>user_id</code> would be <code>jsmith</code>.
+</p>
+</div>
+
+<div id="outline-container-2-3-1" class="outline-4">
+<h4 id="sec-2-3-1">Bookmark a broadcast</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<pre class="example">
+POST /bookmarks/:user/:pid
+</pre>
+
+<p>
+Returns <code>201 Created</code> on success, <code>400 Bad request</code> on error.
+</p>
+</div>
+
+<div id="outline-container-2-3-1-1" class="outline-5">
+<h5 id="sec-2-3-1-1">Example</h5>
+<div class="outline-text-5" id="text-2-3-1-1">
+<p>
+$ curl -i -X POST <a href="http://$HOST/bookmarks/doofus/p013wn96" >http://$HOST/bookmarks/doofus/p013wn96</a> -H &lsquo;Content-Length: 0'
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-2-3-2" class="outline-4">
+<h4 id="sec-2-3-2">Get a specific bookmark for user and broadcast</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<pre class="example">
+GET /bookmarks/:user/:pid
+</pre>
+</div>
+
+<div id="outline-container-2-3-2-1" class="outline-5">
+<h5 id="sec-2-3-2-1">Example</h5>
+<div class="outline-text-5" id="text-2-3-2-1">
+<p>
+$ curl -i -X GET <a href="http://$HOST/bookmarks/doofus/p013wn96" >http://$HOST/bookmarks/doofus/p013wn96</a>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-2-3-3" class="outline-4">
+<h4 id="sec-2-3-3">Get all bookmarks for user</h4>
+<div class="outline-text-4" id="text-2-3-3">
+<pre class="example">
+GET /bookmarks/:user
+</pre>
+
+<p>
+Returns a JSON array of <a href="#sec-3-3" >Bookmarks</a>.
+</p>
+</div>
+
+<div id="outline-container-2-3-3-1" class="outline-5">
+<h5 id="sec-2-3-3-1">Example</h5>
+<div class="outline-text-5" id="text-2-3-3-1">
+<p>
+$ curl -i -X GET <a href="http://$HOST/bookmarks/doofus" >http://$HOST/bookmarks/doofus</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-2-4" class="outline-3">
+<h3 id="sec-2-4">Broadcasts</h3>
+<div id="outline-container-2-4-1" class="outline-4">
+<h4 id="sec-2-4-1">Get specific broadcast</h4>
+<div class="outline-text-4" id="text-2-4-1">
+<pre class="example">
+GET /broadcasts/:pid
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Data</h2>
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1">Channel</h3>
+<div class="outline-text-3" id="text-3-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col class="left"/>
+
+<col class="left"/>
+
+<col class="left"/>
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Field</th>
+<th scope="col" class="left">Type</th>
+<th scope="col" class="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">id</td>
+<td class="left">string</td>
+<td class="left">unique identifier</td>
+</tr>
+
+<tr>
+<td class="left">name</td>
+<td class="left">string</td>
+<td class="left">name of channel</td>
+</tr>
+
+<tr>
+<td class="left">sort_order</td>
+<td class="left">integer</td>
+<td class="left">sort order</td>
+</tr>
+
+<tr>
+<td class="left">image</td>
+<td class="left">string</td>
+<td class="left">url of channel logo (132x99)</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-3-1-1" class="outline-4">
+<h4 id="sec-3-1-1">Example</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<div class="org-src-container">
+
+<pre class="src src-js"><span style="color: #DFDFDF;">"bbc_one"</span> :
+{
+  <span style="color: #DFDFDF;">"id"</span> : <span style="color: #DFDFDF;">"bbc_one"</span>,
+  <span style="color: #DFDFDF;">"name"</span> : <span style="color: #DFDFDF;">"BBC One"</span>,
+  <span style="color: #DFDFDF;">"sort_order"</span>: 1,
+  <span style="color: #DFDFDF;">"image"</span> : <span style="color: #DFDFDF;">"/img/channels/bbc_one.jpg"</span>
+},
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-3-2" class="outline-3">
+<h3 id="sec-3-2">Broadcast</h3>
+<div class="outline-text-3" id="text-3-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col class="left"/>
+
+<col class="left"/>
+
+<col class="left"/>
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Field</th>
+<th scope="col" class="left">Type</th>
+<th scope="col" class="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">pid</td>
+<td class="left">string</td>
+<td class="left">unique identifier (broadcast)</td>
+</tr>
+
+<tr>
+<td class="left">start_date</td>
+<td class="left">string</td>
+<td class="left">ISO date UTC</td>
+</tr>
+
+<tr>
+<td class="left">end_date</td>
+<td class="left">string</td>
+<td class="left">ISO date UTC</td>
+</tr>
+
+<tr>
+<td class="left">duration</td>
+<td class="left">integer</td>
+<td class="left">duration in seconds</td>
+</tr>
+
+<tr>
+<td class="left">title</td>
+<td class="left">string</td>
+<td class="left">programme title</td>
+</tr>
+
+<tr>
+<td class="left">episode_pid</td>
+<td class="left">string</td>
+<td class="left">identifier (episode)</td>
+</tr>
+
+<tr>
+<td class="left">image</td>
+<td class="left">string</td>
+<td class="left">URL of jpeg image (640x360)</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-3-2-1" class="outline-4">
+<h4 id="sec-3-2-1">Example</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<div class="org-src-container">
+
+<pre class="src src-js">{
+    <span style="color: #DFDFDF;">"pid"</span>: <span style="color: #DFDFDF;">"p013wn96"</span>,
+    <span style="color: #DFDFDF;">"start_date"</span>: <span style="color: #DFDFDF;">"2013-01-26T01:00:00Z"</span>,
+    <span style="color: #DFDFDF;">"end_date"</span>: <span style="color: #DFDFDF;">"2013-01-26T01:05:00Z"</span>,
+    <span style="color: #DFDFDF;">"duration"</span>: 300,
+    <span style="color: #DFDFDF;">"title"</span>: <span style="color: #DFDFDF;">"Weatherview"</span>,
+    <span style="color: #DFDFDF;">"episode_pid"</span>: <span style="color: #DFDFDF;">"b01q3ry3"</span>,
+    <span style="color: #DFDFDF;">"image"</span>: <span style="color: #DFDFDF;">"http://node1.bbcimg.co.uk/iplayer/images/episode/b01q3ry3_640_360.jpg"</span>
+},
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-3-3" class="outline-3">
+<h3 id="sec-3-3">Bookmark</h3>
+<div class="outline-text-3" id="text-3-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col class="left"/>
+
+<col class="left"/>
+
+<col class="left"/>
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Field</th>
+<th scope="col" class="left">Type</th>
+<th scope="col" class="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">user_id</td>
+<td class="left">string</td>
+<td class="left">unique identifier for user</td>
+</tr>
+
+<tr>
+<td class="left">pid</td>
+<td class="left">string</td>
+<td class="left">broadcast identifier</td>
+</tr>
+
+<tr>
+<td class="left">create_date</td>
+<td class="left">string</td>
+<td class="left">ISO datetime UTC of bookmark creation</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-3-3-1" class="outline-4">
+<h4 id="sec-3-3-1">Example</h4>
+<div class="outline-text-4" id="text-3-3-1">
+<div class="org-src-container">
+
+<pre class="src src-js">{
+  <span style="color: #DFDFDF;">"p013wn96"</span>: {
+    <span style="color: #DFDFDF;">"user_id"</span>: <span style="color: #DFDFDF;">"doofus"</span>,
+    <span style="color: #DFDFDF;">"pid"</span>: <span style="color: #DFDFDF;">"p013wn96"</span>,
+    <span style="color: #DFDFDF;">"create_date"</span>: <span style="color: #DFDFDF;">"2013-01-31T12:31:11Z"</span>
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div></body>
+</html>
