@@ -26,4 +26,4 @@ Run the server:
 
 ## API
 
-The API is documented in [docs/api.org](docs/api.org).
+The API is documented in [docs/api.org](docs/api.org) (mirrored at http://rd-broadcast-bookmarks.herokuapp.com/api).
