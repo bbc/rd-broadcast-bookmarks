@@ -45,9 +45,9 @@ Feel free to use any framework(s) you like.
 The server's address is: http://rd-broadcast-bookmarks.herokuapp.com/.
 
 You can find the server code and documentation for the API for the
-server at http://github/bbcrd/rd-broadcast-bookmarks. You can clone
-this repo and run it locally to test your applications. Do not fork
-this repo on github as that will reveal who you are to other
+server at http://github.com/bbcrd/rd-broadcast-bookmarks. You can
+clone this repo and run it locally to test your applications. Do not
+fork this repo on github as that will reveal who you are to other
 candidates.
 
 The REST API the server provides is documented at
