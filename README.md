@@ -20,7 +20,7 @@ Then install the dependencies:
 
 ## Run
 
-Run the server:
+Run the server (serving at http://localhost:3000):
 
     node server.js
 
