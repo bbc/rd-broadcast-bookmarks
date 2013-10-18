@@ -27,3 +27,10 @@ Run the server (serving at http://localhost:3000):
 ## API
 
 The API is documented in [docs/api.org](docs/api.org) (mirrored at http://rd-broadcast-bookmarks.herokuapp.com/api).
+
+# License
+
+Copyright &copy; 2013 British Broadcasting Corporation
+
+Licensed under the Apache 2.0 license. See [COPYING](https://github.com/bbcrd/rd-broadcast-bookmarks/COPYING) for details.
+
